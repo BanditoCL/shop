@@ -28,7 +28,8 @@
 
     <?php include('header.php'); ?>
     <?php
-    $consult_products = "SELECT * FROM productos p JOIN imagenes i ON p.id_producto = i.id_producto WHERE i.img_principal = 'si' AND p.id_producto = '1'";
+    $id_producto = $_REQUEST['id'];
+    $consult_products = "SELECT * FROM productos p JOIN imagenes i ON p.id_producto = i.id_producto WHERE i.img_principal = 'si' AND p.id_producto = '$id_producto '";
     $result_products = mysqli_query($conectar, $consult_products);
     $product = mysqli_fetch_assoc($result_products);
     ?>
@@ -62,7 +63,7 @@
                                 src="<?php echo $product['ruta'] ?>" alt="">
                         </div>
                         <?php
-                        $consult_img = "SELECT * FROM imagenes WHERE id_producto = '1' ORDER BY `imagenes`.`img_principal` DESC";
+                        $consult_img = "SELECT * FROM imagenes WHERE id_producto = '$id_producto ' ORDER BY `imagenes`.`img_principal` DESC";
                         $result_img = mysqli_query($conectar, $consult_img);
                         ?>
                         <div class="product__details__pic__slider owl-carousel">

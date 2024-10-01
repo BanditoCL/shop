@@ -376,7 +376,7 @@
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
-                                        <h6><a href="#"><?php echo $row['descripcion']; ?></a></h6>
+                                        <h6><a href="shop-details.php?id=<?php echo $row['id_producto']; ?>"><?php echo $row['descripcion']; ?></a></h6>
                                         <h5>s/.<?php echo $row['precio']; ?>.00</h5>
                                     </div>
                                 </div>
