@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2024 at 12:52 AM
+-- Generation Time: Oct 02, 2024 at 12:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -114,7 +114,7 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id_producto`, `descripcion`, `detalles`, `categoria`, `subcategoria`, `marca`, `material`, `origen`, `peso`, `fecha_ingreso`, `stock`, `precio`, `oferta`, `destacado`, `documentacion`) VALUES
-(1, 'Rotomartillo Stanley Con Maletín Y Accesorios 1250W', 'Poderoso motor de 1250W para un amplio rango de aplicaciones de taladrado y cincelado\r\nDiseño con piston en \"L\" para mayor poder\r\nIndicador de servicio y consumo de carbones para facilitar mantenimiento\r\nEmbrague de seguridad para proteger al usuario\r\nFácil acceso a los carbones\r\nVelocidad variable para mayor control\r\nViene con carbón adicional y adaptador para brocas regulares\r\n\r\nCAPACIDAD DE CORTE/PERFORACIÓN:\r\nMadera: 40mm\r\nMetal: 32mm\r\nHormigón: 13mm\r\nINCLUYE: Maletín, Empuñadura lateral, Limitador de profundidad, Mechas, Punta, Cincel, Manual\r\n', 'herramientas-electricas', 'maquinarias', 'Stanley', '', 'China', '8.375', '30/09/2024', 21, '569', '', '', '');
+(1, 'Rotomartillo Stanley Con Maletín Y Accesorios 1250W', 'Poderoso motor de 1250W para un amplio rango de aplicaciones de taladrado y cincelado\r\nDiseño con piston en \"L\" para mayor poder\r\nIndicador de servicio y consumo de carbones para facilitar mantenimiento\r\nEmbrague de seguridad para proteger al usuario\r\nFácil acceso a los carbones\r\nVelocidad variable para mayor control\r\nViene con carbón adicional y adaptador para brocas regulares\r\n\r\nCAPACIDAD DE CORTE/PERFORACIÓN:\r\nMadera: 40mm\r\nMetal: 32mm\r\nHormigón: 13mm\r\nINCLUYE: Maletín, Empuñadura lateral, Limitador de profundidad, Mechas, Punta, Cincel, Manual\r\n', 'herramientas-electricas', 'maquinarias', 'Stanley', '', 'China', '8.375', '30/09/2024', 21, '569', '', '', 'documentos/productos/herramientas-electricas/maquinarias/Ficha Técnica de Barra Hexagonal.pdf');
 
 -- --------------------------------------------------------
 
