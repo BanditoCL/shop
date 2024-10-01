@@ -27,71 +27,22 @@
 <body>
 
     <?php include('header.php'); ?>
-
-    <!-- Hero Section Begin -->
-    <section class="hero hero-normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All departments</span>
-                        </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
-                                <span>support 24/7 time</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Hero Section End -->
-
+    <?php
+    $consult_products = "SELECT * FROM productos p JOIN imagenes i ON p.id_producto = i.id_producto WHERE i.img_principal = 'si' AND p.id_producto = '1'";
+    $result_products = mysqli_query($conectar, $consult_products);
+    $product = mysqli_fetch_assoc($result_products);
+    ?>
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Vegetable’s Package</h2>
+                        <h2 class="text-uppercase"><?php echo $product['subcategoria'] ?></h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
-                            <a href="./index.html">Vegetables</a>
-                            <span>Vegetable’s Package</span>
+                            <a href="./index.html"><?php echo $product['categoria'] ?></a>
+                            <span><?php echo $product['subcategoria'] ?></span>
                         </div>
                     </div>
                 </div>
@@ -99,11 +50,7 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
-    <?php
-    $consult_products = "SELECT * FROM productos p JOIN imagenes i ON p.id_producto = i.id_producto WHERE i.img_principal = 'si' AND p.id_producto = '1'";
-    $result_products = mysqli_query($conectar, $consult_products);
-    $product = mysqli_fetch_assoc($result_products);
-    ?>
+
     <!-- Product Details Section Begin -->
     <section class="product-details spad">
         <div class="container">
@@ -114,15 +61,19 @@
                             <img class="product__details__pic__item--large"
                                 src="<?php echo $product['ruta'] ?>" alt="">
                         </div>
+                        <?php
+                        $consult_img = "SELECT * FROM imagenes WHERE id_producto = '1' ORDER BY `imagenes`.`img_principal` DESC";
+                        $result_img = mysqli_query($conectar, $consult_img);
+                        ?>
                         <div class="product__details__pic__slider owl-carousel">
-                            <img data-imgbigurl="img/product/details/product-details-2.jpg"
-                                src="img/product/details/thumb-1.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-3.jpg"
-                                src="img/product/details/thumb-2.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-5.jpg"
-                                src="img/product/details/thumb-3.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-4.jpg"
-                                src="img/product/details/thumb-4.jpg" alt="">
+                            <?php
+                            while ($row = mysqli_fetch_array($result_img)) {
+                            ?>
+                                <img data-imgbigurl="<?php echo $row['ruta'] ?>"
+                                    src="<?php echo $row['ruta'] ?>" alt="">
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -153,7 +104,7 @@
                         <ul>
                             <li><b>Disponibilidad</b> <span>In Stock</span></li>
                             <li><b>Envío</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
-                            <li><b>Peso (KG)</b> <span><?php echo $product['peso'] ?> KG</span></li>
+                            <li><b>Marca</b> <span><?php echo $product['marca'] ?></span></li>
                             <li><b>Compartir en</b>
                                 <div class="share">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -189,40 +140,22 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
-                                <div class="product__details__tab__desc">
-                                    <h6>Informacion del producto</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                        sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                        eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                        sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                        diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                        ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                        Proin eget tortor risus.</p>
-                                    <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                        ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                        elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                        porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                        nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
+                                <div class="product__details__text">
+                                    <ul>
+                                        <li><b>Categoria</b> <span><?php echo $product['categoria'] ?></span></li>
+                                        <li><b>Sub Categoria</b> <span><?php echo $product['subcategoria'] ?></span></li>
+                                        <li><b>Marca</b> <span><?php echo $product['marca'] ?></span></li>
+                                        <li><b>Material</b> <span><?php echo $product['material'] ?></span></li>
+                                        <li><b>Origen</b> <span><?php echo $product['origen'] ?></span></li>
+                                        <li><b>Peso</b> <span><?php echo $product['peso'] ?> KG</span></li>
+                                        <li><b>Stock</b> <span><?php echo $product['stock'] ?></span></li>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Ficha Tecnica</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                        sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                        eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                        sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                        diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                        ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                        Proin eget tortor risus.</p>
+                                    <a href="<?php echo $product['documentacion']; ?>" class="primary-btn" download>Descargar PDF</a>
                                 </div>
                             </div>
                         </div>
