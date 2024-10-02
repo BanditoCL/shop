@@ -578,6 +578,7 @@
   <!-- Blog Section End -->
 
   <?php include('footer.php'); ?>
+  <?php include('cart.php'); ?>
 
   <!-- Js Plugins -->
   <script src="js/jquery-3.3.1.min.js"></script>

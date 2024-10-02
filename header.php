@@ -138,7 +138,7 @@
                 <a href="#"><i class="fa fa-heart"></i> <span>1</span></a>
               </li>
               <li>
-                <a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a>
+                <a href="#"><i class="fa fa-shopping-bag" id="cart-icon" data-toggle="modal" data-target="#cartModal"></i><span id="cart-count">0</span></a>
               </li>
             </ul>
             <div class="header__cart__price">item: <span>$150.00</span></div>
