@@ -106,8 +106,8 @@
                 <div>Login</div>
                 <span class="fa fa-user"></span>
                 <ul>
-                  <li><a href="#">Entrar</a></li>
-                  <li><a href="#">Registrarse</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#loginModal">Entrar</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#registerModal">Registrarse</a></li>
                 </ul>
               </div>
             </div>
