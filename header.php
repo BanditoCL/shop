@@ -30,8 +30,13 @@
           <li><a href="#">English</a></li>
         </ul>
       </div>
-      <div class="header__top__right__auth">
-        <a href="#"><i class="fa fa-user"></i> Login</a>
+      <div class="header__top__right__language">
+        <div>Login</div>
+        <span class="fa fa-user"></span>
+        <ul>
+          <li><a href="#">Entrar</a></li>
+          <li><a href="#">Registrarse</a></li>
+        </ul>
       </div>
     </div>
     <nav class="humberger__menu__nav mobile-menu">
@@ -97,8 +102,13 @@
                   <li><a href="#">English</a></li>
                 </ul>
               </div>
-              <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
+              <div class="header__top__right__language">
+                <div>Login</div>
+                <span class="fa fa-user"></span>
+                <ul>
+                  <li><a href="#">Entrar</a></li>
+                  <li><a href="#">Registrarse</a></li>
+                </ul>
               </div>
             </div>
           </div>
