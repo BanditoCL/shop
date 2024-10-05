@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 04-10-2024 a las 05:32:18
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.1.25
+-- Host: 127.0.0.1
+-- Generation Time: Oct 05, 2024 at 08:55 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `ecommerce`
+-- Database: `ecommerce`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `clientes`
+-- Table structure for table `clientes`
 --
 
 CREATE TABLE `clientes` (
@@ -42,15 +42,22 @@ CREATE TABLE `clientes` (
   `postal` varchar(64) NOT NULL,
   `geolocalizacion` varchar(255) NOT NULL,
   `telefono` varchar(20) DEFAULT NULL,
-  `fecha_registro` varchar(11) DEFAULT current_timestamp(),
+  `fecha_registro` varchar(11) DEFAULT NULL,
   `estado_cliente` enum('activo','inactivo') DEFAULT 'activo',
   `ult_session` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `clientes`
+--
+
+INSERT INTO `clientes` (`id_cliente`, `email`, `pass`, `nombres`, `apellidos`, `doc`, `direccion`, `pais`, `estado`, `ciudad`, `distrito`, `postal`, `geolocalizacion`, `telefono`, `fecha_registro`, `estado_cliente`, `ult_session`) VALUES
+(2, 'willian@example.com', '123', 'willian', 'caro', 0, '', '', '', '', '', '', '', NULL, NULL, 'activo', '');
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalle_venta`
+-- Table structure for table `detalle_venta`
 --
 
 CREATE TABLE `detalle_venta` (
@@ -66,7 +73,7 @@ CREATE TABLE `detalle_venta` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `imagenes`
+-- Table structure for table `imagenes`
 --
 
 CREATE TABLE `imagenes` (
@@ -77,7 +84,7 @@ CREATE TABLE `imagenes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `imagenes`
+-- Dumping data for table `imagenes`
 --
 
 INSERT INTO `imagenes` (`id_imagen`, `id_producto`, `ruta`, `img_principal`) VALUES
@@ -89,7 +96,7 @@ INSERT INTO `imagenes` (`id_imagen`, `id_producto`, `ruta`, `img_principal`) VAL
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `productos`
+-- Table structure for table `productos`
 --
 
 CREATE TABLE `productos` (
@@ -111,7 +118,7 @@ CREATE TABLE `productos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `productos`
+-- Dumping data for table `productos`
 --
 
 INSERT INTO `productos` (`id_producto`, `descripcion`, `detalles`, `categoria`, `subcategoria`, `marca`, `material`, `origen`, `peso`, `fecha_ingreso`, `stock`, `precio`, `oferta`, `destacado`, `documentacion`) VALUES
@@ -121,7 +128,7 @@ INSERT INTO `productos` (`id_producto`, `descripcion`, `detalles`, `categoria`, 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -134,7 +141,7 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `email`, `pass`, `nombres`, `apellidos`, `rol`) VALUES
@@ -157,7 +164,7 @@ INSERT INTO `usuarios` (`id_usuario`, `email`, `pass`, `nombres`, `apellidos`, `
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ventas`
+-- Table structure for table `ventas`
 --
 
 CREATE TABLE `ventas` (
@@ -176,17 +183,17 @@ CREATE TABLE `ventas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `clientes`
+-- Indexes for table `clientes`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id_cliente`);
 
 --
--- Indices de la tabla `detalle_venta`
+-- Indexes for table `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
   ADD PRIMARY KEY (`id_detalle`),
@@ -194,83 +201,83 @@ ALTER TABLE `detalle_venta`
   ADD KEY `fkidVenta` (`id_producto`);
 
 --
--- Indices de la tabla `imagenes`
+-- Indexes for table `imagenes`
 --
 ALTER TABLE `imagenes`
   ADD PRIMARY KEY (`id_imagen`),
   ADD KEY `id_producto` (`id_producto`);
 
 --
--- Indices de la tabla `productos`
+-- Indexes for table `productos`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id_producto`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`);
 
 --
--- Indices de la tabla `ventas`
+-- Indexes for table `ventas`
 --
 ALTER TABLE `ventas`
   ADD PRIMARY KEY (`id_venta`),
   ADD KEY `fkidCli` (`id_cliente`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `clientes`
+-- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `detalle_venta`
+-- AUTO_INCREMENT for table `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
   MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `imagenes`
+-- AUTO_INCREMENT for table `imagenes`
 --
 ALTER TABLE `imagenes`
   MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `productos`
+-- AUTO_INCREMENT for table `productos`
 --
 ALTER TABLE `productos`
   MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT de la tabla `ventas`
+-- AUTO_INCREMENT for table `ventas`
 --
 ALTER TABLE `ventas`
   MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `detalle_venta`
+-- Constraints for table `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
   ADD CONSTRAINT `detalle_venta_ibfk_1` FOREIGN KEY (`id_venta`) REFERENCES `ventas` (`id_venta`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `imagenes`
+-- Constraints for table `imagenes`
 --
 ALTER TABLE `imagenes`
   ADD CONSTRAINT `imagenes_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON DELETE CASCADE ON UPDATE CASCADE;

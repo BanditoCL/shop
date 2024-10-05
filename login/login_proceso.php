@@ -11,8 +11,9 @@ $resultado = mysqli_query($conectar, $sql);
 if (mysqli_num_rows($resultado) > 0) {
     $fila = mysqli_fetch_assoc($resultado);
     $_SESSION['id_cliente'] = $fila['id_cliente'];
-    echo 'success';
-} else {
-    echo 'error';
+    echo "<script>alert('Iniciado:3')</script>";
+    echo "<script>setTimeout(function() { window.history.go(-1); }, 1000)</script>";
+}else{
+    echo "<script>alert('Usuario no encontrado')</script>";
+    echo "<script>setTimeout(function() { window.history.go(-1); }, 1000)</script>";
 }
-?>
