@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="card">
                 <article class="card-body">
-                    <form action="login/register.php" method="post">
+                    <form action="login/process.php" method="post">
                         <div class="form-group">
                             <input class="form-control" placeholder="Nombres" type="text" name="nombres">
                         </div>
