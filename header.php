@@ -104,18 +104,18 @@
               </div>
               <?php
               if (isset($_SESSION['id_cliente']) === true) {
-             ?>
-              <div class="header__top__right__language">
+              ?>
+                <div class="header__top__right__language">
                   <div>Bienvenido</div>
                   <span class="fa fa-user"></span>
                   <ul>
                     <!-- los datos de compras y cuenta podrian ser modales  -->
                     <li><a href="#" data-toggle="modal" data-target="#">Mi Cuenta</a></li>
                     <li><a href="#" data-toggle="modal" data-target="#">Mis Compras</a></li>
-                    <li><a href="login/salir.php" >Salir</a></li>
+                    <li><a href="login/salir.php">Salir</a></li>
                   </ul>
                 </div>
-             <?php
+              <?php
               } else {
               ?>
                 <div class="header__top__right__language">

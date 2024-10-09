@@ -1,5 +1,5 @@
 <?php include('conexion.php');
-session_start(); 
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -98,11 +98,11 @@ session_start();
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
-                                    <input type="text" value="1">
+                                    <input type="text" value="1" id="product-quantity-<?php echo $product['id_producto']; ?>">
                                 </div>
                             </div>
                         </div>
-                        <a href="#" class="primary-btn">ADD TO CARD</a>
+                        <a href="javascript:void(0)" class="primary-btn" onclick="addToCart(<?php echo $product['id_producto']; ?>, '<?php echo $product['descripcion']; ?>', <?php echo $product['precio']; ?>)">ADD TO CART</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
                             <li><b>Disponibilidad</b> <span>In Stock</span></li>
@@ -259,7 +259,7 @@ session_start();
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-
+    <script src="js/cart.js"></script>
 
 </body>
 

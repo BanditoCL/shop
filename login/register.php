@@ -1,5 +1,5 @@
 <?php
-include('../conexion.php');
+include('conexion.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Recibir los datos del formulario
@@ -11,8 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verificar si las contraseñas coinciden
     if ($pass !== $r_pass) {
-        echo "<script>alert('Las contraseñas no coinciden');</script>";
-        echo "<script>setTimeout(function() { window.history.go(-1); }, 1000)</script>";
+        echo "<script>
+        alert('Las contraseñas no coinciden');
+        setTimeout(function() {
+            window.location.href = '../index.php';
+        }, 2000); // Redirige después de 2 segundos
+    </script>";
         exit();
     }
 
@@ -20,8 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email_check_query = "SELECT * FROM clientes WHERE email = '$email' LIMIT 1";
     $result = mysqli_query($conectar, $email_check_query);
     if (mysqli_num_rows($result) > 0) {
-        echo "<script>alert('Este correo electrónico ya está registrado');</script>";
-        echo "<script>setTimeout(function() { window.history.go(-1); }, 1000)</script>";
+        echo "<script>
+        alert('Este correo electrónico ya está registrado');
+        setTimeout(function() {
+            window.location.href = '../index.php';
+        }, 2000); // Redirige después de 2 segundos
+    </script>";
         exit();
     }
 
@@ -36,10 +44,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    echo "<script>alert('Usuario Creado :3')</script>";
-    echo "<script>setTimeout(function() { window.history.go(-1); }, 1000)</script>";
+    // Mostrar mensaje de éxito y luego redirigir
+    echo "<script>
+        alert('Usuario Creado :3');
+        setTimeout(function() {
+            window.location.href = '../index.php';
+        }, 2000); // Redirige después de 2 segundos
+    </script>";
+    exit(); // Asegurarse de que no continúe ejecutando el script después de la redirección
 }
 ?>
+
 
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
