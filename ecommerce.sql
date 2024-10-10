@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 05, 2024 at 08:55 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.1.25
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 11-10-2024 a las 00:33:28
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,35 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ecommerce`
+-- Base de datos: `ecommerce`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `clientes`
+-- Estructura de tabla para la tabla `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
+  `precio` varchar(11) NOT NULL,
+  `cantidad` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cart`
+--
+
+INSERT INTO `cart` (`id`, `id_cliente`, `id_producto`, `descripcion`, `precio`, `cantidad`) VALUES
+(6, 3, 1, 'Rotomartillo Stanley Con Maletín Y Accesorios 1250W', '569', 9);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clientes`
 --
 
 CREATE TABLE `clientes` (
@@ -48,16 +70,17 @@ CREATE TABLE `clientes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `clientes`
+-- Volcado de datos para la tabla `clientes`
 --
 
 INSERT INTO `clientes` (`id_cliente`, `email`, `pass`, `nombres`, `apellidos`, `doc`, `direccion`, `pais`, `estado`, `ciudad`, `distrito`, `postal`, `geolocalizacion`, `telefono`, `fecha_registro`, `estado_cliente`, `ult_session`) VALUES
-(2, 'willian@example.com', '123', 'willian', 'caro', 0, '', '', '', '', '', '', '', NULL, NULL, 'activo', '');
+(3, 'willian@example.com', '$2y$10$BjWKqv5A75o8XEs8SjrgJuxjAeJLeT1WAWbeGMzo5rkaytX/.uThO', 'willian', 'caro ', 0, '', '', '', '', '', '', '', NULL, NULL, 'activo', ''),
+(4, 'realeza@example.com', '$2y$10$uGzJbMhkyzpzjk9rMJo6AuBqRvOapgfY6hM9ImySSPkPlAnzwbRhu', 'makanaki', 'realeza', 0, '', '', '', '', '', '', '', NULL, NULL, 'activo', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detalle_venta`
+-- Estructura de tabla para la tabla `detalle_venta`
 --
 
 CREATE TABLE `detalle_venta` (
@@ -73,7 +96,7 @@ CREATE TABLE `detalle_venta` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `imagenes`
+-- Estructura de tabla para la tabla `imagenes`
 --
 
 CREATE TABLE `imagenes` (
@@ -84,7 +107,7 @@ CREATE TABLE `imagenes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `imagenes`
+-- Volcado de datos para la tabla `imagenes`
 --
 
 INSERT INTO `imagenes` (`id_imagen`, `id_producto`, `ruta`, `img_principal`) VALUES
@@ -96,7 +119,7 @@ INSERT INTO `imagenes` (`id_imagen`, `id_producto`, `ruta`, `img_principal`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productos`
+-- Estructura de tabla para la tabla `productos`
 --
 
 CREATE TABLE `productos` (
@@ -118,17 +141,16 @@ CREATE TABLE `productos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `productos`
+-- Volcado de datos para la tabla `productos`
 --
 
 INSERT INTO `productos` (`id_producto`, `descripcion`, `detalles`, `categoria`, `subcategoria`, `marca`, `material`, `origen`, `peso`, `fecha_ingreso`, `stock`, `precio`, `oferta`, `destacado`, `documentacion`) VALUES
-(1, 'Rotomartillo Stanley Con Maletín Y Accesorios 1250W', 'Poderoso motor de 1250W para un amplio rango de aplicaciones de taladrado y cincelado\r\nDiseño con piston en \"L\" para mayor poder\r\nIndicador de servicio y consumo de carbones para facilitar mantenimiento\r\nEmbrague de seguridad para proteger al usuario\r\nFácil acceso a los carbones\r\nVelocidad variable para mayor control\r\nViene con carbón adicional y adaptador para brocas regulares\r\n\r\nCAPACIDAD DE CORTE/PERFORACIÓN:\r\nMadera: 40mm\r\nMetal: 32mm\r\nHormigón: 13mm\r\nINCLUYE: Maletín, Empuñadura lateral, Limitador de profundidad, Mechas, Punta, Cincel, Manual\r\n', 'herramientas-electricas', 'maquinarias', 'Stanley', '', 'China', '8.375', '30/09/2024', 21, '569', '', '', 'documentos/productos/herramientas-electricas/maquinarias/Ficha Técnica de Barra Hexagonal.pdf'),
-(2, '', '', '', '', 'gaa', '', '', '', '', 2, '12', '', '', '');
+(1, 'Rotomartillo Stanley Con Maletín Y Accesorios 1250W', 'Poderoso motor de 1250W para un amplio rango de aplicaciones de taladrado y cincelado\r\nDiseño con piston en \"L\" para mayor poder\r\nIndicador de servicio y consumo de carbones para facilitar mantenimiento\r\nEmbrague de seguridad para proteger al usuario\r\nFácil acceso a los carbones\r\nVelocidad variable para mayor control\r\nViene con carbón adicional y adaptador para brocas regulares\r\n\r\nCAPACIDAD DE CORTE/PERFORACIÓN:\r\nMadera: 40mm\r\nMetal: 32mm\r\nHormigón: 13mm\r\nINCLUYE: Maletín, Empuñadura lateral, Limitador de profundidad, Mechas, Punta, Cincel, Manual\r\n', 'herramientas-electricas', 'maquinarias', 'Stanley', '', 'China', '8.375', '30/09/2024', 21, '569', '', '', 'documentos/productos/herramientas-electricas/maquinarias/Ficha Técnica de Barra Hexagonal.pdf');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -141,7 +163,7 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `usuarios`
+-- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `email`, `pass`, `nombres`, `apellidos`, `rol`) VALUES
@@ -164,7 +186,7 @@ INSERT INTO `usuarios` (`id_usuario`, `email`, `pass`, `nombres`, `apellidos`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ventas`
+-- Estructura de tabla para la tabla `ventas`
 --
 
 CREATE TABLE `ventas` (
@@ -183,17 +205,23 @@ CREATE TABLE `ventas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `clientes`
+-- Indices de la tabla `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `clientes`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id_cliente`);
 
 --
--- Indexes for table `detalle_venta`
+-- Indices de la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
   ADD PRIMARY KEY (`id_detalle`),
@@ -201,83 +229,89 @@ ALTER TABLE `detalle_venta`
   ADD KEY `fkidVenta` (`id_producto`);
 
 --
--- Indexes for table `imagenes`
+-- Indices de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
   ADD PRIMARY KEY (`id_imagen`),
   ADD KEY `id_producto` (`id_producto`);
 
 --
--- Indexes for table `productos`
+-- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id_producto`);
 
 --
--- Indexes for table `usuarios`
+-- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`);
 
 --
--- Indexes for table `ventas`
+-- Indices de la tabla `ventas`
 --
 ALTER TABLE `ventas`
   ADD PRIMARY KEY (`id_venta`),
   ADD KEY `fkidCli` (`id_cliente`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `clientes`
+-- AUTO_INCREMENT de la tabla `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `detalle_venta`
+-- AUTO_INCREMENT de la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
   MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `imagenes`
+-- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
   MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `productos`
+-- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
   MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `usuarios`
+-- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT for table `ventas`
+-- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
   MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `detalle_venta`
+-- Filtros para la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
   ADD CONSTRAINT `detalle_venta_ibfk_1` FOREIGN KEY (`id_venta`) REFERENCES `ventas` (`id_venta`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `imagenes`
+-- Filtros para la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
   ADD CONSTRAINT `imagenes_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON DELETE CASCADE ON UPDATE CASCADE;
