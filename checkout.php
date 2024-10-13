@@ -1,3 +1,6 @@
+<?php include('conexion.php');
+session_start(); 
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -44,7 +47,12 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
-
+    <?php
+    $id_cliente = $_SESSION['id_cliente'];
+    $consult_cliente = "SELECT * FROM clientes WHERE id_cliente = '$id_cliente'";
+    $result_cliente = mysqli_query($conectar, $consult_cliente);
+    $cliente = mysqli_fetch_assoc($result_cliente);
+    ?>
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
         <div class="container">
@@ -63,55 +71,53 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Nombres<span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" value="<?php echo $cliente['nombres']; ?>" name="nombres">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Apellidos<span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" value="<?php echo $cliente['apellidos']; ?>" name="apellidos">
                                     </div>
                                 </div>
                             </div>
                             <div class="checkout__input">
                                 <p>Pais<span>*</span></p>
-                                <input type="text">
+                                <input type="text" value="<?php echo $cliente['pais']; ?>" name="pais">
                             </div>
                             <div class="checkout__input">
                                 <p>Direccion<span>*</span></p>
-                                <input type="text" placeholder="Street Address" class="checkout__input__add">
-                                <input type="text" placeholder="Apartment, suite, unite ect (optinal)">
+                                <input type="text" placeholder="Street Address" class="checkout__input__add" value="<?php echo $cliente['direccion']; ?>" name="direccion">
                             </div>
                             <div class="checkout__input">
                                 <p>Ciudad<span>*</span></p>
-                                <input type="text">
+                                <input type="text" value="<?php echo $cliente['ciudad']; ?>" name="ciudad">
                             </div>
                             <div class="checkout__input">
                                 <p>Estado<span>*</span></p>
-                                <input type="text">
+                                <input type="text" value="<?php echo $cliente['estado']; ?>" name="estado">
                             </div>
                             <div class="checkout__input">
                                 <p>Postcode / ZIP<span>*</span></p>
-                                <input type="text">
+                                <input type="text" value="<?php echo $cliente['postal']; ?>" name="postal">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Telefono<span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" value="<?php echo $cliente['telefono']; ?>" name="telefono">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" value="<?php echo $cliente['email']; ?>" name="email">
                                     </div>
                                 </div>
                             </div>
                             <div class="checkout__input">
                                 <p>Notas de pedido<span>*</span></p>
-                                <input type="text"
-                                    placeholder="Notas sobre su pedido, por ejemplo, notas especiales para la entrega.">
+                                <input type="text" placeholder="Notas sobre su pedido, por ejemplo, notas especiales para la entrega." name="notas">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -136,6 +142,9 @@
     <!-- Checkout Section End -->
 
     <?php include('footer.php'); ?>
+
+    <?php include('login/login.php'); ?>
+    <?php include('login/register.php'); ?>
 
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
