@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-10-2024 a las 00:33:28
+-- Tiempo de generación: 13-10-2024 a las 04:03:47
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.1.25
 
@@ -41,7 +41,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `id_cliente`, `id_producto`, `descripcion`, `precio`, `cantidad`) VALUES
-(6, 3, 1, 'Rotomartillo Stanley Con Maletín Y Accesorios 1250W', '569', 9);
+(9, 3, 1, 'Rotomartillo Stanley Con Maletín Y Accesorios 1250W', '569', 2);
 
 -- --------------------------------------------------------
 
@@ -74,7 +74,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `email`, `pass`, `nombres`, `apellidos`, `doc`, `direccion`, `pais`, `estado`, `ciudad`, `distrito`, `postal`, `geolocalizacion`, `telefono`, `fecha_registro`, `estado_cliente`, `ult_session`) VALUES
-(3, 'willian@example.com', '$2y$10$BjWKqv5A75o8XEs8SjrgJuxjAeJLeT1WAWbeGMzo5rkaytX/.uThO', 'willian', 'caro ', 0, '', '', '', '', '', '', '', NULL, NULL, 'activo', ''),
+(3, 'willian@example.com', '$2y$10$BjWKqv5A75o8XEs8SjrgJuxjAeJLeT1WAWbeGMzo5rkaytX/.uThO', 'willian', 'caro ', 54125587, 'Carreterra Panamericana km 18', 'Peru', 'Lima', 'Lima', 'Puente Piedra', '15121', '', '95368521', NULL, 'activo', ''),
 (4, 'realeza@example.com', '$2y$10$uGzJbMhkyzpzjk9rMJo6AuBqRvOapgfY6hM9ImySSPkPlAnzwbRhu', 'makanaki', 'realeza', 0, '', '', '', '', '', '', '', NULL, NULL, 'activo', '');
 
 -- --------------------------------------------------------
@@ -199,9 +199,10 @@ CREATE TABLE `ventas` (
   `numero_transaccion` varchar(255) DEFAULT NULL,
   `direccion_envio` varchar(255) DEFAULT NULL,
   `codigo_rastreo` varchar(100) DEFAULT NULL,
-  `impuestos` decimal(10,2) DEFAULT 0.00,
-  `descuento` decimal(10,2) DEFAULT 0.00,
-  `fecha_envio` datetime DEFAULT NULL
+  `impuestos` varchar(11) DEFAULT NULL,
+  `descuento` varchar(11) DEFAULT NULL,
+  `fecha_envio` varchar(11) DEFAULT NULL,
+  `notas` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -262,7 +263,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
