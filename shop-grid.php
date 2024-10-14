@@ -362,7 +362,7 @@ session_start();
                         </div>
                     </div>
                     <?php
-                    $consult_products = "SELECT * FROM productos p JOIN imagenes i ON p.id_producto = i.id_producto WHERE i.img_principal = 'si'";
+                    $consult_products = "SELECT * FROM productos p JOIN imagenes i ON p.id_producto = i.id_producto WHERE i.img_principal = '1'";
                     $result_products = mysqli_query($conectar, $consult_products);
                     ?>
                     <div class="row">
@@ -371,7 +371,7 @@ session_start();
                         ?>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="<?php echo $row['ruta']; ?>">
+                                    <div class="product__item__pic set-bg" data-setbg="admin/<?php echo $row['ruta']; ?>">
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                             <li><a href="javascript:void(0)" onclick="addToCart(<?php echo $row['id_producto']; ?>, '<?php echo $row['descripcion']; ?>', <?php echo $row['precio']; ?>)"><i class="fa fa-shopping-cart"></i></a></li>

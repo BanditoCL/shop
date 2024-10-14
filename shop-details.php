@@ -31,7 +31,7 @@ session_start();
     <?php include('header.php'); ?>
     <?php
     $id_producto = $_REQUEST['id'];
-    $consult_products = "SELECT * FROM productos p JOIN imagenes i ON p.id_producto = i.id_producto WHERE i.img_principal = 'si' AND p.id_producto = '$id_producto '";
+    $consult_products = "SELECT * FROM productos p JOIN imagenes i ON p.id_producto = i.id_producto WHERE i.img_principal = '1' AND p.id_producto = '$id_producto '";
     $result_products = mysqli_query($conectar, $consult_products);
     $product = mysqli_fetch_assoc($result_products);
     ?>
@@ -62,7 +62,7 @@ session_start();
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large"
-                                src="<?php echo $product['ruta'] ?>" alt="">
+                                src="admin/<?php echo $product['ruta'] ?>" alt="">
                         </div>
                         <?php
                         $consult_img = "SELECT * FROM imagenes WHERE id_producto = '$id_producto ' ORDER BY `imagenes`.`img_principal` DESC";
@@ -72,8 +72,8 @@ session_start();
                             <?php
                             while ($row = mysqli_fetch_array($result_img)) {
                             ?>
-                                <img data-imgbigurl="<?php echo $row['ruta'] ?>"
-                                    src="<?php echo $row['ruta'] ?>" alt="">
+                                <img data-imgbigurl="admin/<?php echo $row['ruta'] ?>"
+                                    src="admin/<?php echo $row['ruta'] ?>" alt="">
                             <?php
                             }
                             ?>
@@ -106,7 +106,7 @@ session_start();
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
                             <li><b>Disponibilidad</b> <span>In Stock</span></li>
-                            <li><b>Envío</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+                            <li><b>Modelo</b> <span><?php echo $product['modelo']; ?></span></li>
                             <li><b>Marca</b> <span><?php echo $product['marca'] ?></span></li>
                             <li><b>Compartir en</b>
                                 <div class="share">

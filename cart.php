@@ -17,7 +17,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Proceder al Pago</button>
+                <a href="checkout.php" class="primary-btn">Proceder al Pago</a>
             </div>
         </div>
     </div>

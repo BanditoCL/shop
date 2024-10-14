@@ -1,5 +1,26 @@
-<?php include('conexion.php');
-session_start(); 
+<?php
+session_start();
+include 'conexion.php';
+
+// Verificar si hay un usuario logueado
+if (!isset($_SESSION['id_cliente'])) {
+    header('Location: index.php'); // Redirige si no está logueado
+    exit();
+}
+
+$id_cliente = $_SESSION['id_cliente'];
+
+// Consulta para obtener los productos del carrito
+$consult_cart = "
+    SELECT c.id_producto, p.descripcion, p.precio, c.cantidad 
+    FROM cart c 
+    INNER JOIN productos p ON c.id_producto = p.id_producto 
+    WHERE c.id_cliente = '$id_cliente'
+";
+$result_cart = mysqli_query($conectar, $consult_cart);
+
+// Calcular el total del pedido
+$total = 0;
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -27,8 +48,8 @@ session_start();
 </head>
 
 <body>
-   
-<?php include('header.php'); ?>
+
+    <?php include('header.php'); ?>
 
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
@@ -48,7 +69,6 @@ session_start();
     </section>
     <!-- Breadcrumb Section End -->
     <?php
-    $id_cliente = $_SESSION['id_cliente'];
     $consult_cliente = "SELECT * FROM clientes WHERE id_cliente = '$id_cliente'";
     $result_cliente = mysqli_query($conectar, $consult_cliente);
     $cliente = mysqli_fetch_assoc($result_cliente);
@@ -122,16 +142,22 @@ session_start();
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
-                                <h4>Su pedido</h4>
-                                <div class="checkout__order__products">Productos <span>Total</span></div>
+                                <h4>Su Pedido</h4>
+                                <div class="checkout__order__products">Producto <span>Total</span></div>
                                 <ul>
-                                    <li>Vegetable’s Package <span>$75.99</span></li>
-                                    <li>Fresh Vegetable <span>$151.99</span></li>
-                                    <li>Organic Bananas <span>$53.99</span></li>
+                                    <?php while ($row = mysqli_fetch_assoc($result_cart)) :
+                                        $subtotal = $row['precio'] * $row['cantidad'];
+                                        $total += $subtotal;
+                                    ?>
+                                        <li>
+                                            <?php echo $row['descripcion']; ?> (x<?php echo $row['cantidad']; ?>)
+                                            <span>$<?php echo number_format($subtotal, 2); ?></span>
+                                        </li>
+                                    <?php endwhile; ?>
                                 </ul>
-                                <div class="checkout__order__subtotal">Subtotal <span>$750.99</span></div>
-                                <div class="checkout__order__total">Total <span>$750.99</span></div>
-                                <button type="submit" class="site-btn">REALIZAR PEDIDO</button>
+                                <div class="checkout__order__subtotal">Subtotal <span>$<?php echo number_format($total, 2); ?></span></div>
+                                <div class="checkout__order__total">Total <span>$<?php echo number_format($total, 2); ?></span></div>
+                                <button type="submit" class="site-btn">PROCEDER AL PAGO</button>
                             </div>
                         </div>
                     </div>
@@ -156,7 +182,7 @@ session_start();
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
 
- 
+
 
 </body>
 
