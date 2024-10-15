@@ -110,28 +110,35 @@ $total = 0;
                                 <input type="text" placeholder="Street Address" class="checkout__input__add" value="<?php echo $cliente['direccion']; ?>" name="direccion">
                             </div>
                             <div class="checkout__input">
-                                <p>Ciudad<span>*</span></p>
-                                <input type="text" value="<?php echo $cliente['ciudad']; ?>" name="ciudad">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Estado<span>*</span></p>
-                                <input type="text" value="<?php echo $cliente['estado']; ?>" name="estado">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Postcode / ZIP<span>*</span></p>
-                                <input type="text" value="<?php echo $cliente['postal']; ?>" name="postal">
+                                <p>Telefono<span>*</span></p>
+                                <input type="text" value="<?php echo $cliente['telefono']; ?>" name="telefono">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
-                                        <p>Telefono<span>*</span></p>
-                                        <input type="text" value="<?php echo $cliente['telefono']; ?>" name="telefono">
+                                        <p>Estado<span>*</span></p>
+                                        <input type="text" value="<?php echo $cliente['estado']; ?>" name="estado">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
-                                        <p>Email<span>*</span></p>
-                                        <input type="text" value="<?php echo $cliente['email']; ?>" name="email">
+                                        <p>Ciudad<span>*</span></p>
+                                        <input type="text" value="<?php echo $cliente['ciudad']; ?>" name="ciudad">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Distrito<span>*</span></p>
+                                        <input type="text" value="<?php echo $cliente['distrito']; ?>" name="distrito">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Postcode / ZIP<span>*</span></p>
+                                        <input type="text" value="<?php echo $cliente['postal']; ?>" name="postal" >
                                     </div>
                                 </div>
                             </div>
@@ -143,23 +150,38 @@ $total = 0;
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
                                 <h4>Su Pedido</h4>
-                                <div class="checkout__order__products">Producto <span>Total</span></div>
-                                <ul>
-                                    <?php while ($row = mysqli_fetch_assoc($result_cart)) :
+                                <div class="checkout__order__products">
+                                    <strong>Producto</strong>
+                                    <span><strong>Total</strong></span>
+                                </div>
+                                <ul style="list-style: none; padding: 0;">
+                                    <?php
+                                    $total = 0;
+                                    while ($row = mysqli_fetch_assoc($result_cart)) :
                                         $subtotal = $row['precio'] * $row['cantidad'];
                                         $total += $subtotal;
                                     ?>
-                                        <li>
-                                            <?php echo $row['descripcion']; ?> (x<?php echo $row['cantidad']; ?>)
+                                        <hr>
+                                        <li style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                            <span>
+                                                <?php echo $row['descripcion']; ?> (x<?php echo $row['cantidad']; ?>)
+                                            </span>
                                             <span>$<?php echo number_format($subtotal, 2); ?></span>
                                         </li>
                                     <?php endwhile; ?>
                                 </ul>
-                                <div class="checkout__order__subtotal">Subtotal <span>$<?php echo number_format($total, 2); ?></span></div>
-                                <div class="checkout__order__total">Total <span>$<?php echo number_format($total, 2); ?></span></div>
-                                <button type="submit" class="site-btn">PROCEDER AL PAGO</button>
+                                <div class="checkout__order__subtotal" style="display: flex; justify-content: space-between; margin-top: 15px;">
+                                    <strong>Subtotal</strong>
+                                    <span>$<?php echo number_format($total, 2); ?></span>
+                                </div>
+                                <div class="checkout__order__total" style="display: flex; justify-content: space-between; margin-top: 10px;">
+                                    <strong>Total</strong>
+                                    <span>$<?php echo number_format($total, 2); ?></span>
+                                </div>
+                                <button type="submit" class="site-btn" style="width: 100%; margin-top: 20px;">PROCEDER AL PAGO</button>
                             </div>
                         </div>
+
                     </div>
                 </form>
             </div>

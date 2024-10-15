@@ -69,20 +69,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <article class="card-body">
                     <form action="login/register.php" method="post">
                         <div class="form-group">
-                            <input class="form-control" placeholder="Nombres" type="text" name="nombres">
+                            <input class="form-control" placeholder="Nombres" type="text" name="nombres" required>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Apellidos" type="text" name="apellidos">
+                            <input class="form-control" placeholder="Apellidos" type="text" name="apellidos" required>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Email" type="email" name="email">
+                            <input class="form-control" placeholder="Email" type="email" name="email" required>
                         </div>
                         <div class="form-group position-relative">
-                            <input class="form-control" id="pass" placeholder="Contraseña" type="password" name="pass">
+                            <input class="form-control" id="pass" placeholder="Contraseña" type="password" name="pass" required>
                             <span toggle="#pass" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         </div>
                         <div class="form-group position-relative">
-                            <input class="form-control" id="r_pass" placeholder="Repetir Contraseña" type="password" name="r_pass">
+                            <input class="form-control" id="r_pass" placeholder="Repetir Contraseña" type="password" name="r_pass" required>
                             <span toggle="#r_pass" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         </div>
                         <div class="row">
