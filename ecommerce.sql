@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2024 at 11:50 PM
+-- Generation Time: Oct 16, 2024 at 12:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -75,8 +75,8 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `email`, `pass`, `nombres`, `apellidos`, `doc`, `direccion`, `pais`, `estado`, `ciudad`, `distrito`, `postal`, `geolocalizacion`, `telefono`, `fecha_registro`, `estado_cliente`, `ult_session`) VALUES
-(3, 'willian@example.com', '$2y$10$BjWKqv5A75o8XEs8SjrgJuxjAeJLeT1WAWbeGMzo5rkaytX/.uThO', 'willian', 'caro ', 54125587, 'Carreterra Panamericana km 18', 'Peru', 'Lima', 'Lima', 'Puente Piedra', '15121', '', '95368521', NULL, 'activo', ''),
-(4, 'realeza@example.com', '$2y$10$uGzJbMhkyzpzjk9rMJo6AuBqRvOapgfY6hM9ImySSPkPlAnzwbRhu', 'makanaki', 'realeza', 0, '', '', '', '', '', '', '', NULL, NULL, 'activo', '');
+(3, 'willian@example.com', '$2y$10$BjWKqv5A75o8XEs8SjrgJuxjAeJLeT1WAWbeGMzo5rkaytX/.uThO', 'willian', 'caro', 54125587, 'Carreterra Panamericana km 18', 'Peru', 'Lima', 'Lima', 'Puente Piedra', '15121', '', '987 745 634', NULL, 'activo', ''),
+(4, 'realeza@example.com', '$2y$10$uGzJbMhkyzpzjk9rMJo6AuBqRvOapgfY6hM9ImySSPkPlAnzwbRhu', 'makanaki', 'realeza', 54742575, '', '', '', '', '', '', '', NULL, NULL, 'activo', '');
 
 -- --------------------------------------------------------
 
