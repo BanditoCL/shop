@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PayPal JS SDK Standard Integration</title>
+  <title>Online Payment</title>
   <script 
     src="https://www.paypal.com/sdk/js?client-id=AX0P5pr5EOqpbFXKwqnK9dhDLMrsbYPDcX3Mu1nAKglo1KfOzZIJXcetwz6BtzAkfH-9fYAtpV2nQLra&buyer-country=US&currency=USD&components=buttons&enable-funding=venmo,paylater,card">
   </script>

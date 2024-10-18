@@ -1,7 +1,7 @@
 // Función para actualizar el contador del carrito
 function updateCartCount() {
   $.ajax({
-    url: "get_cart_count.php", // Archivo PHP que obtiene la cantidad de productos en el carrito
+    url: "cart/get_cart_count.php", // Archivo PHP que obtiene la cantidad de productos en el carrito
     type: "GET",
     success: function (count) {
       $("#cart-count").text(count);
@@ -18,7 +18,7 @@ $(document).ready(function () {
 function addToCart(id_producto, descripcion, precio) {
   // Verificar si el usuario ha iniciado sesión
   $.ajax({
-    url: "check_session.php", // Archivo PHP para verificar si el usuario está logueado
+    url: "cart/check_session.php", // Archivo PHP para verificar si el usuario está logueado
     type: "GET",
     success: function (userId) {
       if (!userId) {
@@ -30,7 +30,7 @@ function addToCart(id_producto, descripcion, precio) {
 
       // Si el usuario está logueado, agregar el producto al carrito
       $.ajax({
-        url: "add_to_cart.php", // Archivo PHP para manejar la inserción en la base de datos
+        url: "cart/add_to_cart.php", // Archivo PHP para manejar la inserción en la base de datos
         type: "POST",
         data: {
           id_cliente: userId,
@@ -57,7 +57,7 @@ function addToCart(id_producto, descripcion, precio) {
 // Función para cargar los ítems del carrito en el modal
 function loadCartItems() {
   $.ajax({
-    url: "get_cart_items.php", // Archivo PHP que obtiene los ítems del carrito
+    url: "cart/get_cart_items.php", // Archivo PHP que obtiene los ítems del carrito
     type: "GET",
     success: function (response) {
       var cartItems = JSON.parse(response); // Parsear el JSON recibido
@@ -93,7 +93,7 @@ $("#cart-icon").on("click", function () {
 
 function loadCartItems() {
   $.ajax({
-    url: "get_cart_items.php",
+    url: "cart/get_cart_items.php",
     type: "GET",
     success: function (response) {
       var cartItems = JSON.parse(response);
@@ -124,7 +124,7 @@ function loadCartItems() {
 // Función para disminuir la cantidad de un producto en el carrito
 function decreaseQuantity(id_producto) {
   $.ajax({
-    url: "decrease_quantity.php", // Archivo PHP para disminuir la cantidad
+    url: "cart/decrease_quantity.php", // Archivo PHP para disminuir la cantidad
     type: "POST",
     data: { id_producto: id_producto },
     success: function (response) {
@@ -141,7 +141,7 @@ function decreaseQuantity(id_producto) {
 // Función para eliminar un producto del carrito
 function removeFromCart(id_producto) {
   $.ajax({
-    url: "remove_from_cart.php", // Archivo PHP para eliminar un producto del carrito
+    url: "cart/remove_from_cart.php", // Archivo PHP para eliminar un producto del carrito
     type: "POST",
     data: { id_producto: id_producto },
     success: function (response) {
@@ -157,7 +157,7 @@ function removeFromCart(id_producto) {
 // Función para aumentar la cantidad de un producto
 function increaseQuantity(id_producto) {
   $.ajax({
-    url: "increase_quantity.php",
+    url: "cart/increase_quantity.php",
     type: "POST",
     data: { id_producto: id_producto },
     success: function (response) {

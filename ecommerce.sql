@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2024 at 12:27 AM
+-- Generation Time: Oct 19, 2024 at 01:00 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -199,18 +199,19 @@ INSERT INTO `usuarios` (`id_usuario`, `email`, `pass`, `nombres`, `apellidos`, `
 
 CREATE TABLE `ventas` (
   `id_venta` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
-  `fecha` varchar(11) NOT NULL,
-  `monto_total` decimal(10,2) NOT NULL,
-  `metodo_pago` varchar(50) NOT NULL,
+  `id_cliente` int(11) DEFAULT NULL,
+  `fecha` varchar(11) DEFAULT NULL,
+  `monto_total` decimal(10,2) DEFAULT NULL,
+  `metodo_pago` varchar(50) DEFAULT NULL,
   `estado_pago` enum('pendiente','completado','cancelado') DEFAULT 'pendiente',
+  `estado_envio` enum('en proceso','enviado','entregado') NOT NULL DEFAULT 'en proceso',
   `numero_transaccion` varchar(255) DEFAULT NULL,
   `direccion_envio` varchar(255) DEFAULT NULL,
   `codigo_rastreo` varchar(100) DEFAULT NULL,
   `impuestos` varchar(11) DEFAULT NULL,
   `descuento` varchar(11) DEFAULT NULL,
   `fecha_envio` varchar(11) DEFAULT NULL,
-  `notas` varchar(255) NOT NULL
+  `notas` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
