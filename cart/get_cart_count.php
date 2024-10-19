@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conexion.php';  // Asegúrate de tener tu conexión a la base de datos
+include '../conexion.php';  // Asegúrate de tener tu conexión a la base de datos
 
 if (isset($_SESSION['id_cliente'])) {
     $id_cliente = $_SESSION['id_cliente'];

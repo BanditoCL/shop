@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conexion.php';
+include '../conexion.php';
 
 if (isset($_POST['id_producto']) && isset($_SESSION['id_cliente'])) {
     $id_producto = $_POST['id_producto'];

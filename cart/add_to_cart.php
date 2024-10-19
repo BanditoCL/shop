@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conexion.php';  // Incluye la conexión a tu base de datos
+include '../conexion.php';  // Incluye la conexión a tu base de datos
 
 if (isset($_POST['id_cliente']) && isset($_POST['id_producto']) && isset($_POST['descripcion']) && isset($_POST['precio'])) {
     $id_cliente = $_POST['id_cliente'];

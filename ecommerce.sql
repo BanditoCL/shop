@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2024 at 01:00 AM
+-- Generation Time: Oct 19, 2024 at 08:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -75,7 +75,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `email`, `pass`, `nombres`, `apellidos`, `doc`, `direccion`, `pais`, `estado`, `ciudad`, `distrito`, `postal`, `geolocalizacion`, `telefono`, `fecha_registro`, `estado_cliente`, `ult_session`) VALUES
-(3, 'willian@example.com', '$2y$10$BjWKqv5A75o8XEs8SjrgJuxjAeJLeT1WAWbeGMzo5rkaytX/.uThO', 'willian', 'caro', 54125587, 'Carreterra Panamericana km 18', 'Peru', 'Lima', 'Lima', 'Puente Piedra', '15121', '', '987 745 634', NULL, 'activo', ''),
+(3, 'willian@example.com', '$2y$10$BjWKqv5A75o8XEs8SjrgJuxjAeJLeT1WAWbeGMzo5rkaytX/.uThO', 'willian', 'caro', 54125587, 'Carretera Panamericana km 18', 'Peru', 'Lima', 'Lima', 'Puente Piedra', '15121', '', '987 745 634', NULL, 'activo', ''),
 (4, 'realeza@example.com', '$2y$10$uGzJbMhkyzpzjk9rMJo6AuBqRvOapgfY6hM9ImySSPkPlAnzwbRhu', 'makanaki', 'realeza', 54742575, '', '', '', '', '', '', '', NULL, NULL, 'activo', '');
 
 -- --------------------------------------------------------
@@ -215,6 +215,13 @@ CREATE TABLE `ventas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `ventas`
+--
+
+INSERT INTO `ventas` (`id_venta`, `id_cliente`, `fecha`, `monto_total`, `metodo_pago`, `estado_pago`, `estado_envio`, `numero_transaccion`, `direccion_envio`, `codigo_rastreo`, `impuestos`, `descuento`, `fecha_envio`, `notas`) VALUES
+(1, 3, '19/10/2024', 2176.00, '', 'pendiente', 'en proceso', NULL, 'Peru, Lima, Lima - Puente Piedra : Carretera Panamericana km 18 (15121)', NULL, NULL, NULL, NULL, 'Dejar paquete en recepcion ');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -308,7 +315,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
