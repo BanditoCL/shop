@@ -19,7 +19,6 @@ $consult_cart = "
 ";
 $result_cart = mysqli_query($conectar, $consult_cart);
 
-// Calcular el total del pedido
 $total = 0;
 ?>
 <!DOCTYPE html>
@@ -84,7 +83,7 @@ $total = 0;
             </div>
             <div class="checkout__form">
                 <h4>Detalles de facturación</h4>
-                <form action="#">
+                <form action="process_checkout.php" method="POST">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <div class="row">
@@ -178,10 +177,10 @@ $total = 0;
                                     <strong>Total</strong>
                                     <span>$<?php echo number_format($total, 2); ?></span>
                                 </div>
+                                <input type="hidden" name="monto_total" value="<?php echo $total; ?>">
                                 <button type="submit" class="site-btn" style="width: 100%; margin-top: 20px;">PROCEDER AL PAGO</button>
                             </div>
                         </div>
-
                     </div>
                 </form>
             </div>

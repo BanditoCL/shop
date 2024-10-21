@@ -2,57 +2,66 @@
 session_start();
 include 'conexion.php';
 
-// Verificar si hay un usuario logueado
+// Verificar si el cliente está logueado
 if (!isset($_SESSION['id_cliente'])) {
     header('Location: index.php'); // Redirige si no está logueado
     exit();
 }
 
 $id_cliente = $_SESSION['id_cliente'];
+$id_venta = isset($_GET['id_venta']) ? $_GET['id_venta'] : null;
 
-// Consulta para obtener los productos del carrito
-$consult_cart = "SELECT * FROM ventas v INNER JOIN clientes c ON v.id_cliente = c.id_cliente WHERE v.id_cliente = '$id_cliente'";
-$result_cart = mysqli_query($conectar, $consult_cart);
+if (!$id_venta) {
+    echo "ID de venta no proporcionado.";
+    exit();
+}
 
+// Consultar la venta y los datos del cliente
+$consulta = "SELECT v.*, c.nombres, c.apellidos, c.email, c.telefono FROM ventas v INNER JOIN clientes c ON v.id_cliente = c.id_cliente WHERE v.id_venta = '$id_venta' AND c.id_cliente = '$id_cliente'";
+
+$resultado = mysqli_query($conectar, $consulta);
+
+if (mysqli_num_rows($resultado) > 0) {
+    $venta = mysqli_fetch_assoc($resultado);
+} else {
+    echo "No se encontró la venta o no tienes permiso para verla.";
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="zxx">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MRP STORE | PAYMENT</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css" />
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css" />
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
 
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script src="https://www.paypal.com/sdk/js?client-id=AX0P5pr5EOqpbFXKwqnK9dhDLMrsbYPDcX3Mu1nAKglo1KfOzZIJXcetwz6BtzAkfH-9fYAtpV2nQLra&currency=USD&components=buttons&enable-funding=venmo,paylater,card"></script>
 </head>
 
 <body>
 
     <?php include('header.php'); ?>
 
-    <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Pasarela de Pago</h2>
+                        <h2>Confirmación de Pago</h2>
                         <div class="breadcrumb__option">
-                            <a href="./index.html">Home</a>
+                            <a href="./index.php">Inicio</a>
                             <span>Payment</span>
                         </div>
                     </div>
@@ -60,136 +69,107 @@ $result_cart = mysqli_query($conectar, $consult_cart);
             </div>
         </div>
     </section>
-    <!-- Breadcrumb Section End -->
 
-    <!-- Shoping Cart Section Begin -->
     <section class="shoping-cart spad">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="shoping__cart__table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="shoping__product">Products</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="img/cart/cart-1.jpg" alt="">
-                                        <h5>Vegetable’s Package</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $55.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $110.00
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="img/cart/cart-2.jpg" alt="">
-                                        <h5>Fresh Garden Vegetable</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $39.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $39.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="img/cart/cart-3.jpg" alt="">
-                                        <h5>Organic Bananas</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $69.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $69.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="shoping__cart__btns">
-                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                            Upadate Cart</a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="shoping__checkout">
-                        <h5>Cart Total</h5>
-                        <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
-                        </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
-                    </div>
-                </div>
-            </div>
+            <h3>Detalles de la Orden</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Nombre Completo</th>
+                        <td><?php echo $venta['nombres'] . ' ' . $venta['apellidos']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td><?php echo $venta['email']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Teléfono</th>
+                        <td><?php echo $venta['telefono']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Dirección de Envío</th>
+                        <td><?php echo $venta['direccion_envio']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Monto Total</th>
+                        <td>$<?php echo number_format($venta['monto_total'], 2); ?></td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de Compra</th>
+                        <td><?php echo $venta['fecha']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Estado de Pago</th>
+                        <td><?php echo $venta['estado_pago']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Estado de Envío</th>
+                        <td><?php echo $venta['estado_envio']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Notas</th>
+                        <td><?php echo $venta['notas']; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="paypal-button-container"></div>
+
         </div>
+
     </section>
-    <!-- Shoping Cart Section End -->
+
+    <script>
+        paypal.Buttons({
+            style: {
+                color: 'blue',
+                shape: 'pill',
+                label: 'pay'
+            },
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '<?php echo $venta['monto_total']; ?>' // Monto total de la venta
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Pago realizado con éxito, ' + details.payer.name.given_name + '!');
+
+                    // Enviar actualización del estado de pago a la base de datos
+                    fetch('actualizar_pago.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id_venta: '<?php echo $id_venta; ?>'
+                        })
+                    }).then(response => response.json()).then(data => {
+                        if (data.success) {
+                            window.location.href = "mis_compras.php";
+                        } else {
+                            alert('Hubo un error al actualizar el estado de pago.');
+                        }
+                    }).catch(error => console.error('Error:', error));
+                });
+            },
+            onCancel: function(data) {
+                alert('Pago cancelado.');
+            },
+            onError: function(err) {
+                console.error('Error en el pago:', err);
+            }
+        }).render('#paypal-button-container');
+    </script>
 
     <?php include('footer.php'); ?>
 
-    <?php include('login/login.php'); ?>
-    <?php include('login/register.php'); ?>
-
-    <!-- Js Plugins -->
+    <!-- Plugins JS -->
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
@@ -198,7 +178,6 @@ $result_cart = mysqli_query($conectar, $consult_cart);
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-
 
 </body>
 
