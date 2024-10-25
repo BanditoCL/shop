@@ -9,36 +9,6 @@ if (!isset($_SESSION['id_cliente'])) {
 }
 $id_cliente = $_SESSION['id_cliente'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    // Recibir los datos del formulario
-    $nombres = $_POST['nombres'];
-    $apellidos = $_POST['apellidos'];
-    $pais = $_POST['pais'];
-    $direccion = $_POST['direccion'];
-    $ciudad = $_POST['ciudad'];
-    $estado = $_POST['estado'];
-    $distrito = $_POST['distrito'];
-    $postal = $_POST['postal'];
-    $telefono = $_POST['telefono'];
-    $email = $_POST['email'];
-
-    $update_consult = "UPDATE clientes SET nombres = '$nombres', apellidos = '$apellidos', pais = '$pais', direccion = '$direccion', ciudad = '$ciudad', estado = '$estado', distrito = '$distrito', postal = '$postal', telefono = '$telefono', email = '$email' WHERE id_cliente = '$id_cliente'";
-
-    if (!mysqli_query($conectar, $update_consult)) {
-        echo "Error al insertar en la tabla 'clientes': " . mysqli_error($conectar);
-        exit();
-    }
-
-    // Mostrar mensaje de éxito y luego redirigir
-    echo "<script>
-        alert('Actualizado :3');
-        setTimeout(function() {
-            window.location.href = 'index.php';
-        }, 2000); // Redirige después de 2 segundos
-    </script>";
-    exit(); // Asegurarse de que no continúe ejecutando el script después de la redirección
-}
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -76,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Shopping Cart</h2>
+                        <h2>Mis Pedidos</h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
-                            <span>Shopping Cart</span>
+                            <span>Pedidos</span>
                         </div>
                     </div>
                 </div>
@@ -87,6 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </section>
     <!-- Breadcrumb Section End -->
+    <?php
+    // Ensure the $id_cliente variable is sanitized or use prepared statements for security
+    $consult_pedidos = "SELECT * FROM ventas WHERE id_cliente = '$id_cliente'";
+
+    // Execute query and handle potential errors
+    $result_pedidos = mysqli_query($conectar, $consult_pedidos)
+        or die("Error in query: " . mysqli_error($conectar));
+    ?>
 
     <!-- Shoping Cart Section Begin -->
     <section class="shoping-cart spad">
@@ -97,112 +75,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <table>
                             <thead>
                                 <tr>
-                                    <th class="shoping__product">Products</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
+                                    <th>Fecha</th>
+                                    <th>Monto Total</th>
+                                    <th>Estado de Pago</th>
+                                    <th>Estado de Envío</th>
+                                    <th>ID Rastreo</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="img/cart/cart-1.jpg" alt="">
-                                        <h5>Vegetable’s Package</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $55.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $110.00
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="img/cart/cart-2.jpg" alt="">
-                                        <h5>Fresh Garden Vegetable</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $39.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $39.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="img/cart/cart-3.jpg" alt="">
-                                        <h5>Organic Bananas</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $69.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $69.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
+                                <?php
+                                while ($row = mysqli_fetch_array($result_pedidos)) {
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row['fecha']; ?></td>
+                                        <td><?php echo $row['monto_total']; ?></td>
+                                        <td><?php echo $row['estado_pago']; ?></td>
+                                        <td><?php echo $row['estado_envio']; ?></td>
+                                        <td><?php echo $row['codigo_rastreo']; ?></td>
+                                        <td><span class="icon_close"></span></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="shoping__cart__btns">
-                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                            Upadate Cart</a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="shoping__checkout">
-                        <h5>Cart Total</h5>
-                        <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
-                        </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>
