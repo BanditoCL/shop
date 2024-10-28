@@ -202,6 +202,7 @@ $total = 0;
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
 
 
 

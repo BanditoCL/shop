@@ -58,53 +58,86 @@ $id_cliente = $_SESSION['id_cliente'];
     </section>
     <!-- Breadcrumb Section End -->
     <?php
-    // Ensure the $id_cliente variable is sanitized or use prepared statements for security
-    $consult_pedidos = "SELECT * FROM ventas WHERE id_cliente = '$id_cliente'";
+// Asegúrate de tener una sesión iniciada y un cliente válido.
+$id_cliente = $_SESSION['id_cliente'];
 
-    // Execute query and handle potential errors
-    $result_pedidos = mysqli_query($conectar, $consult_pedidos)
-        or die("Error in query: " . mysqli_error($conectar));
-    ?>
+// Consulta para obtener las ventas del cliente
+$consult_pedidos = "SELECT * FROM ventas WHERE id_cliente = '$id_cliente'";
+$result_pedidos = mysqli_query($conectar, $consult_pedidos)
+    or die("Error en la consulta: " . mysqli_error($conectar));
+?>
 
-    <!-- Shoping Cart Section Begin -->
-    <section class="shoping-cart spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="shoping__cart__table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Monto Total</th>
-                                    <th>Estado de Pago</th>
-                                    <th>Estado de Envío</th>
-                                    <th>ID Rastreo</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                while ($row = mysqli_fetch_array($result_pedidos)) {
-                                ?>
+<!-- Sección de Pedidos -->
+<section class="shoping-cart spad">
+    <div class="container">
+        <h2 class="mb-5 text-center">Historial de Pedidos</h2>
+
+        <div class="accordion" id="accordionExample">
+            <?php
+            $contador = 0;  // Contador para IDs únicos
+
+            while ($row = mysqli_fetch_array($result_pedidos)) {
+                $id_venta = $row['id_venta'];  // ID de la venta actual
+
+                // Consulta para obtener los detalles de la venta
+                $consulta_detalles = "SELECT * FROM detalle_venta WHERE id_venta = '$id_venta'";
+                $result_detalles = mysqli_query($conectar, $consulta_detalles)
+                    or die("Error en los detalles: " . mysqli_error($conectar));
+            ?>
+                <div class="card mb-3">
+                    <div class="card-header bg-primary text-white" id="heading<?php echo $contador; ?>">
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                            <span>Fecha: <?php echo $row['fecha']; ?> | Total: S/ <?php echo $row['monto_total']; ?></span>
+                            <button class="btn btn-link text-white" type="button"
+                                    data-toggle="collapse" data-target="#collapse<?php echo $contador; ?>"
+                                    aria-expanded="false" aria-controls="collapse<?php echo $contador; ?>">
+                                Ver Detalles
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapse<?php echo $contador; ?>" class="collapse"
+                         aria-labelledby="heading<?php echo $contador; ?>" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
                                     <tr>
-                                        <td><?php echo $row['fecha']; ?></td>
-                                        <td><?php echo $row['monto_total']; ?></td>
-                                        <td><?php echo $row['estado_pago']; ?></td>
-                                        <td><?php echo $row['estado_envio']; ?></td>
-                                        <td><?php echo $row['codigo_rastreo']; ?></td>
-                                        <td><span class="icon_close"></span></td>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
                                     </tr>
-                                <?php
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    while ($detalle = mysqli_fetch_array($result_detalles)) {
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $detalle['descripcion']; ?></td>
+                                            <td><?php echo $detalle['cantidad']; ?></td>
+                                            <td>S/ <?php echo $detalle['precio']; ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+
+                            <!-- Botón para proceder al pago -->
+                            <div class="d-flex justify-content-end">
+                                <a href="shoping-payment.php?id_venta=<?php echo $id_venta; ?>" 
+                                   class="btn btn-success mt-3">
+                                    Proceder al Pago
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php
+                $contador++;  // Incrementar el contador
+            }
+            ?>
         </div>
-    </section>
+    </div>
+</section>
+
     <!-- Shoping Cart Section End -->
 
     <?php include('footer.php'); ?>
