@@ -4,37 +4,37 @@ include 'conexion.php';
 $id_cliente = $_SESSION['id_cliente']; // ID del cliente logueado
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtener datos del formulario
-    $nombres = $_POST['nombres'];
-    $apellidos = $_POST['apellidos'];
-    $pais = $_POST['pais'];
-    $direccion = $_POST['direccion'];
-    $telefono = $_POST['telefono'];
-    $estado = $_POST['estado'];
-    $ciudad = $_POST['ciudad'];
-    $distrito = $_POST['distrito'];
-    $postal = $_POST['postal'];
-    $notas = $_POST['notas'];
-    $monto_total = $_POST['monto_total'];
-    $fecha = date('d/m/Y');
-    $estado_pago = 'pendiente';
-    $estado_envio = 'en proceso';
+    // **Obtener productos del carrito antes de insertar la venta**
+    $sql_carrito = "SELECT id_producto, descripcion, cantidad, precio FROM cart WHERE id_cliente = '$id_cliente'";
+    $result_carrito = mysqli_query($conectar, $sql_carrito);
 
-    // Construir la dirección completa
-    $direccion_completa = "$direccion, $distrito, $ciudad, $estado, $pais, ZIP: $postal";
+    if (mysqli_num_rows($result_carrito) > 0) {
+        // **Obtener datos del formulario**
+        $nombres = $_POST['nombres'];
+        $apellidos = $_POST['apellidos'];
+        $pais = $_POST['pais'];
+        $direccion = $_POST['direccion'];
+        $telefono = $_POST['telefono'];
+        $estado = $_POST['estado'];
+        $ciudad = $_POST['ciudad'];
+        $distrito = $_POST['distrito'];
+        $postal = $_POST['postal'];
+        $notas = $_POST['notas'];
+        $monto_total = $_POST['monto_total'];
+        $fecha = date('d/m/Y');
+        $estado_pago = 'pendiente';
+        $estado_envio = 'en proceso';
 
-    // **Insertar venta en la tabla 'ventas'**
-    $sql_venta = "INSERT INTO ventas (id_cliente, fecha, monto_total, direccion_envio, estado_pago, estado_envio, notas) 
-                  VALUES ('$id_cliente', '$fecha', '$monto_total', '$direccion_completa', '$estado_pago', '$estado_envio', '$notas')";
+        // **Construir la dirección completa**
+        $direccion_completa = "$direccion, $distrito, $ciudad, $estado, $pais, ZIP: $postal";
 
-    if (mysqli_query($conectar, $sql_venta)) {
-        $id_venta = mysqli_insert_id($conectar); // Obtener el ID de la venta recién creada
+        // **Insertar la venta en la tabla 'ventas'**
+        $sql_venta = "INSERT INTO ventas (id_cliente, fecha, monto_total, direccion_envio, estado_pago, estado_envio, notas) 
+                      VALUES ('$id_cliente', '$fecha', '$monto_total', '$direccion_completa', '$estado_pago', '$estado_envio', '$notas')";
 
-        // **Obtener productos del carrito desde la base de datos**
-        $sql_carrito = "SELECT id_producto, descripcion, cantidad, precio FROM cart WHERE id_cliente = '$id_cliente'";
-        $result_carrito = mysqli_query($conectar, $sql_carrito);
+        if (mysqli_query($conectar, $sql_venta)) {
+            $id_venta = mysqli_insert_id($conectar); // Obtener el ID de la venta recién creada
 
-        if (mysqli_num_rows($result_carrito) > 0) {
             // **Insertar los detalles de la venta**
             while ($producto = mysqli_fetch_assoc($result_carrito)) {
                 $id_producto = $producto['id_producto'];
@@ -58,14 +58,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
 
-            // Redirigir al usuario a la página de pago
-            header("Location: shoping-payment.php?id_venta=$id_venta");
+            // **Formulario oculto para enviar el id_venta por POST**
+            echo "
+            <form id='postVentaForm' action='shoping-payment.php' method='POST'>
+                <input type='hidden' name='id_venta' value='$id_venta'>
+            </form>
+            <script>
+                document.getElementById('postVentaForm').submit();
+            </script>";
             exit;
         } else {
-            echo "El carrito está vacío.";
+            echo "Error al registrar la venta: " . mysqli_error($conectar);
         }
     } else {
-        echo "Error al registrar la venta: " . mysqli_error($conectar);
+        // **Mostrar mensaje si el carrito está vacío**
+        echo "<script>alert('El carrito está vacío.')</script>";
+        echo "<script>setTimeout(function() { window.history.go(-1); }, 1000)</script>";
     }
 }
 ?>

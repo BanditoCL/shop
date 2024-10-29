@@ -9,22 +9,27 @@ if (!isset($_SESSION['id_cliente'])) {
 }
 
 $id_cliente = $_SESSION['id_cliente'];
-$id_venta = isset($_GET['id_venta']) ? $_GET['id_venta'] : null;
+$id_venta = isset($_POST['id_venta']) ? $_POST['id_venta'] : null;
 
 if (!$id_venta) {
-    echo "ID de venta no proporcionado.";
+    echo "<script>alert('ID de venta no proporcionado.')</script>";
+    echo "<script>setTimeout(function() { window.history.go(-1); }, 1000)</script>";
     exit();
 }
 
 // Consultar la venta y los datos del cliente
-$consulta = "SELECT v.*, c.nombres, c.apellidos, c.email, c.telefono FROM ventas v INNER JOIN clientes c ON v.id_cliente = c.id_cliente WHERE v.id_venta = '$id_venta' AND c.id_cliente = '$id_cliente'";
+$consulta = "SELECT v.*, c.nombres, c.apellidos, c.email, c.telefono 
+             FROM ventas v 
+             INNER JOIN clientes c ON v.id_cliente = c.id_cliente 
+             WHERE v.id_venta = '$id_venta' AND c.id_cliente = '$id_cliente'";
 
 $resultado = mysqli_query($conectar, $consulta);
 
 if (mysqli_num_rows($resultado) > 0) {
     $venta = mysqli_fetch_assoc($resultado);
 } else {
-    echo "No se encontró la venta o no tienes permiso para verla.";
+    echo "<script>alert('No se encontró la venta o no tienes permiso para verla.')</script>";
+    echo "<script>setTimeout(function() { window.history.go(-1); }, 1000)</script>";
     exit();
 }
 ?>
