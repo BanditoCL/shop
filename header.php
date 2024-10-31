@@ -15,7 +15,8 @@
           <a href="#"><i class="fa fa-heart"></i> <span>1</span></a>
         </li>
         <li>
-          <a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a>
+          <a href="#"><i class="fa fa-shopping-bag" id="cart-icon" data-toggle="modal" data-target="#cartModal"></i>
+            <span id="cart-count">0</span></a>
         </li>
       </ul>
       <div class="header__cart__price">item: <span>$150.00</span></div>
@@ -30,14 +31,33 @@
           <li><a href="#">English</a></li>
         </ul>
       </div>
-      <div class="header__top__right__language">
-        <div>Login</div>
-        <span class="fa fa-user"></span>
-        <ul>
-          <li><a href="#">Entrar</a></li>
-          <li><a href="#">Registrarse</a></li>
-        </ul>
-      </div>
+      <?php
+      if (isset($_SESSION['id_cliente']) === true) {
+      ?>
+        <div class="header__top__right__language">
+          <div>Bienvenido</div>
+          <span class="fa fa-user"></span>
+          <ul>
+            <!-- los datos de compras y cuenta podrian ser modales  -->
+            <li><a href="profile.php">Mi Cuenta</a></li>
+            <li><a href="mis_compras.php">Mis Compras</a></li>
+            <li><a href="login/salir.php">Salir</a></li>
+          </ul>
+        </div>
+      <?php
+      } else {
+      ?>
+        <div class="header__top__right__language">
+          <div>Login</div>
+          <span class="fa fa-user"></span>
+          <ul>
+            <li><a href="#" data-toggle="modal" data-target="#loginModal">Entrar</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#registerModal">Registrarse</a></li>
+          </ul>
+        </div>
+      <?php
+      }
+      ?>
     </div>
     <nav class="humberger__menu__nav mobile-menu">
       <ul>
